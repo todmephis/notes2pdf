@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<style>
+@page {
+    size: {{ page_size }};
+    margin: 2cm;
+}
+:root {
+    --accent: {{ accent_color }};
+}
+{{ theme_css | safe }}
+{{ pygments_css | safe }}
+</style>
+</head>
+<body>
+{{ content | safe }}
+</body>
+</html>

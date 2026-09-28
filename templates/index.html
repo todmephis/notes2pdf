@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Notion → PDF</title>
+<style>
+    body {
+        font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+        max-width: 560px;
+        margin: 4em auto;
+        color: #1a1a1a;
+    }
+    h1 { font-size: 1.4em; }
+    label { display: block; margin-top: 1.2em; font-weight: 600; }
+    input, select {
+        margin-top: 0.4em;
+        padding: 0.5em;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    input[type="color"] { width: 4em; padding: 0.1em; }
+    button {
+        margin-top: 2em;
+        padding: 0.7em 1.4em;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    .hint { color: #666; font-size: 0.85em; margin-top: 0.3em; }
+    .error { color: #b91c1c; margin-top: 1em; }
+</style>
+</head>
+<body>
+<h1>Exportar reporte de Notion a PDF</h1>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+<form action="/convert" method="post" enctype="multipart/form-data">
+    <label for="file">Archivo exportado de Notion (.md o .zip)</label>
+    <input type="file" id="file" name="file" accept=".md,.zip" required>
+    <p class="hint">Si tu página tiene imágenes o subpáginas, Notion la exporta como .zip — súbelo tal cual, sin descomprimir.</p>
+
+    <label for="theme">Tema</label>
+    <select id="theme" name="theme">
+        {% for t in themes %}
+        <option value="{{ t }}">{{ t }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="accent_color">Color de acento</label>
+    <input type="color" id="accent_color" name="accent_color" value="#2563eb">
+
+    <label for="page_size">Tamaño de página</label>
+    <select id="page_size" name="page_size">
+        <option value="A4">A4</option>
+        <option value="Carta">Carta</option>
+    </select>
+
+    <button type="submit">Convertir a PDF</button>
+</form>
+</body>
+</html>
