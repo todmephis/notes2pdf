@@ -1,3 +1,5 @@
+@page { background: #1e1e1e; }
+
 body {
     font-family: "Helvetica Neue", Arial, sans-serif;
     color: #e5e5e5;
@@ -20,21 +22,23 @@ h3 { font-size: 13pt; }
 a { color: var(--accent, #60a5fa); text-decoration: none; }
 
 code {
-    background: #2d2d2d;
-    color: #f0f0f0;
+    background: var(--inline-code-bg, #2d2d2d);
+    color: var(--inline-code-text, #f0f0f0);
     padding: 0.1em 0.35em;
     border-radius: 4px;
     font-size: 0.9em;
 }
 
 pre {
-    background: #2d2d2d;
+    background: var(--block-code-bg, #2d2d2d);
+    color: var(--block-code-text, #f0f0f0);
     padding: 0.8em;
     border-radius: 6px;
-    overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
-pre code { background: none; padding: 0; }
+pre code { background: none; padding: 0; white-space: inherit; overflow-wrap: inherit; color: inherit; }
 
 blockquote {
     border-left: 3px solid var(--accent, #60a5fa);

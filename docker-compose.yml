@@ -1,0 +1,13 @@
+services:
+  notes2pdf:
+    build: .
+    image: notes2pdf:local
+    container_name: notes2pdf
+    restart: unless-stopped
+    environment:
+      - PORT=5050
+    ports:
+      # Loopback-only: reached from outside the Pi via `tailscale serve`
+      # (tailnet-only, port 8445 — see /home/kali/apps/README.md), never
+      # exposed directly on the LAN.
+      - "127.0.0.1:5050:5050"

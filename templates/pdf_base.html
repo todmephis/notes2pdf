@@ -7,15 +7,74 @@
 @page {
     size: {{ page_size }};
     margin: 2cm;
+    {% if header_text %}
+    @top-center {
+        content: "{{ header_text }}";
+        font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+        font-size: 9pt;
+        color: #888888;
+    }
+    {% endif %}
+    {% if footer_text %}
+    @bottom-center {
+        content: "{{ footer_text }}";
+        font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+        font-size: 9pt;
+        color: #888888;
+    }
+    {% endif %}
+    {% if page_numbers_enabled %}
+    @bottom-right {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+        font-size: 9pt;
+        color: #888888;
+    }
+    {% endif %}
 }
 :root {
     --accent: {{ accent_color }};
+    {% if block_code_bg_color %}--block-code-bg: {{ block_code_bg_color }};{% endif %}
+    {% if block_code_text_color %}--block-code-text: {{ block_code_text_color }};{% endif %}
+    {% if inline_code_bg_color %}--inline-code-bg: {{ inline_code_bg_color }};{% endif %}
+    {% if inline_code_text_color %}--inline-code-text: {{ inline_code_text_color }};{% endif %}
 }
 {{ theme_css | safe }}
 {{ pygments_css | safe }}
+
+.watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    opacity: {{ watermark_opacity }};
+    z-index: 1000;
+}
+
+.watermark span {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: {{ (64 * watermark_scale) | round(1) }}pt;
+    font-weight: 700;
+    color: #000;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+}
+
+.watermark img {
+    max-width: {{ (50 * watermark_scale) | round(1) }}vw;
+    max-height: {{ (50 * watermark_scale) | round(1) }}vh;
+    display: block;
+}
 </style>
 </head>
 <body>
 {{ content | safe }}
+
+{% if watermark_image_data_uri %}
+<div class="watermark"><img src="{{ watermark_image_data_uri }}" alt=""></div>
+{% elif watermark_text %}
+<div class="watermark"><span>{{ watermark_text }}</span></div>
+{% endif %}
 </body>
 </html>
